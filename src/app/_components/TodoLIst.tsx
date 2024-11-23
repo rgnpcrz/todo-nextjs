@@ -1,32 +1,22 @@
 "use client";
-import { trpc } from "../_trpc/client";
-import { IconCircle, IconCircleCheck, IconStack, IconStar, IconStarFilled } from "@tabler/icons-react";
+
+import { IconCircle, IconCircleCheck, IconStar, IconStarFilled } from "@tabler/icons-react";
+import { useTodos } from "../hooks/useTodos";
 
 export default function TodoList() {
-  const getTodos = trpc.getTodos.useQuery();
-
-  const deleteTodo = trpc.deleteTodo.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
-  });
-  const toggleBoolean = trpc.toggleBoolean.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
-  });
+  const { todos = [], deleteTodo, toggleBoolean, isLoading, isError } = useTodos();
 
   return (
     <div className=" ">
-      {getTodos.isLoading ? (
+      {isLoading ? (
         <p>Loading...</p>
-      ) : getTodos.isError ? (
+      ) : isError ? (
         <p>Error loading todos</p>
       ) : (
         <>
           <div>
             <div className="flex flex-col gap-3 pt-5">
-              {getTodos.data.map((todo) => (
+              {todos.map((todo) => (
                 <div key={`9aOnfYyr-${todo.id}`} className="border flex justify-between align-middle rounded-md p-3">
                   <div className="flex gap-3">
                     <button
@@ -54,12 +44,13 @@ export default function TodoList() {
                         toggleBoolean.mutate({ id: todo.id, field: "favorite" });
                       }}
                     >
-                      {todo.favorite ? <IconStar /> : <IconStarFilled className="text-red-500" />}
+                      {todo.favorite ? <IconStarFilled className="text-red-500" /> : <IconStar />}
                     </button>
                   </div>
                 </div>
               ))}
             </div>
+            {/* <pre>{JSON.stringify(todos, null, 2)}</pre> */}
           </div>
         </>
       )}

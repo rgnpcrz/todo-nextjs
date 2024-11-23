@@ -1,7 +1,8 @@
 "use client";
-import TodoList from "./_components/TodoLIst";
+import TodoList from "./_components/TodoList";
 import { trpc } from "./_trpc/client";
 import { create } from "zustand";
+import { useTodos } from "./hooks/useTodos";
 
 type TodoStore = {
   title: string;
@@ -15,22 +16,7 @@ const useTodoStore = create<TodoStore>()((set) => ({
 
 export default function Home() {
   const { title, setTitle } = useTodoStore();
-  const getTodos = trpc.getTodos.useQuery();
-  const createTodo = trpc.createTodo.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
-  });
-  const deleteTodo = trpc.deleteTodo.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
-  });
-  const toggleDone = trpc.toggleDone.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
-  });
+  const { createTodo } = useTodos();
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
