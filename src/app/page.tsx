@@ -1,8 +1,9 @@
 "use client";
 import TodoList from "./_components/TodoList";
-import { trpc } from "./_trpc/client";
 import { create } from "zustand";
 import { useTodos } from "./hooks/useTodos";
+import SingleTodo from "./_components/SingleTodo";
+import { useSingleTodoStore } from "./store/useSingleTodoStore";
 
 type TodoStore = {
   title: string;
@@ -17,6 +18,7 @@ const useTodoStore = create<TodoStore>()((set) => ({
 export default function Home() {
   const { title, setTitle } = useTodoStore();
   const { createTodo } = useTodos();
+  const { todoItem } = useSingleTodoStore();
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -28,46 +30,33 @@ export default function Home() {
   };
 
   return (
-    <div className="mx-auto relative max-w-[1400px] flex flex-col  border h-full">
-      <div className="py-4 border px-4">
-        <p className="text-lg font-semibold ">Tasks</p>
-      </div>
-      <div className="flex-1 overflow-y-scroll ">
-        <TodoList />
-      </div>
-      <div className="p-4 border-t bg-white">
-        <form onSubmit={handleSubmit}>
-          <div className="relative">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)} // Update title state
-              placeholder="Enter todo title"
-              className="border border-gray-300 p-2 rounded pl-8 w-full"
-            />
-            <div className="absolute right-1 inset-y-0 flex  items-center ">
-              <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
+    <main className="h-full border mx-auto max-w-[2000px] flex border-red-400">
+      <div className=" relative  flex flex-1 flex-col  border h-full  ">
+        <div className="py-4 border px-4">
+          <p className="text-lg font-semibold ">Tasks</p>
+        </div>
+        <div className="flex-1 overflow-y-scroll bg-slate-50 ">
+          <TodoList />
+        </div>
+        <div className="p-4 border-t bg-white">
+          <form onSubmit={handleSubmit}>
+            <div className="relative">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)} // Update title state
+                placeholder="Enter todo title"
+                className="border border-gray-300 p-2 rounded pl-8 w-full"
+              />
+              <div className="absolute right-1 inset-y-0 flex  items-center ">
+                <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-      {/* <div className="absolute bottom-0 inset-x-0 p-4 border-t bg-white">
-        <form onSubmit={handleSubmit}>
-          <div className="relative">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)} // Update title state
-              placeholder="Enter todo title"
-              className="border border-gray-300 p-2 rounded pl-8 w-full"
-            />
-            <div className="absolute right-1 inset-y-0 flex  items-center ">
-              <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
-            </div>
-          </div>
-        </form>
-      </div> */}
-    </div>
+      {todoItem !== null && <SingleTodo />}
+    </main>
   );
 }
 

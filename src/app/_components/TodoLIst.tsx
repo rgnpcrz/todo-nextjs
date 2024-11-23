@@ -2,19 +2,11 @@
 
 import { IconCircle, IconCircleCheck, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { useTodos } from "../hooks/useTodos";
-
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSingleTodoStore } from "../store/useSingleTodoStore";
 
 export default function TodoList() {
-  const { todos = [], deleteTodo, toggleBoolean, isLoading, isError } = useTodos();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const handleOpenTodo = (id: number) => {
-    const currentParams = new URLSearchParams(searchParams.toString());
-    currentParams.set("todoId", id.toString()); // Set the `todoId` parameter
-    router.push(`?${currentParams.toString()}`); // Update the URL
-  };
+  const { todos = [], toggleBoolean, isLoading, isError } = useTodos();
+  const { setTodoItem } = useSingleTodoStore();
 
   return (
     <div className=" ">
@@ -24,11 +16,11 @@ export default function TodoList() {
         <p>Error loading todos</p>
       ) : (
         <>
-          <div className="p-4">
-            <div className="flex flex-col gap-3">
+          <div className="p-4 ">
+            <div className="flex flex-col gap-2">
               {todos.map((todo) => (
-                <div key={`9aOnfYyr-${todo.id}`} className="border flex justify-between align-middle rounded-md p-3">
-                  <div className="flex gap-3">
+                <div key={`9aOnfYyr-${todo.id}`} className="border bg-white flex justify-between align-middle rounded-md p-3">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => {
                         console.log(todo.id);
@@ -37,27 +29,21 @@ export default function TodoList() {
                     >
                       {todo.done ? <IconCircleCheck className="text-green-500" /> : <IconCircle />}
                     </button>
-                    <div>{todo.title}</div>
+                    <div>
+                      <p className={`${todo.done ? "line-through text-gray-700" : ""}`}>{todo.title}</p>
+                    </div>
                   </div>
                   <div className="flex gap-5">
                     <button
                       onClick={() => {
-                        handleOpenTodo(todo.id);
+                        setTodoItem(todo);
                       }}
                     >
                       Details
                     </button>
+
                     <button
                       onClick={() => {
-                        console.log(todo.id);
-                        deleteTodo.mutate({ id: todo.id });
-                      }}
-                    >
-                      X
-                    </button>
-                    <button
-                      onClick={() => {
-                        console.log(todo.id);
                         toggleBoolean.mutate({ id: todo.id, field: "favorite" });
                       }}
                     >

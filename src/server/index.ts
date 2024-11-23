@@ -11,6 +11,14 @@ export const appRouter = router({
     });
     return todos;
   }),
+  getTodoById: publicProcedure.input(z.object({ id: z.number() })).query(async ({ input }) => {
+    const { id } = input;
+    const todo = await prisma.todo.findUnique({
+      where: { id },
+    });
+    if (!todo) throw new Error("Todo not found");
+    return todo;
+  }),
   deleteTodo: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
     const { id } = input;
 
@@ -67,7 +75,6 @@ export const appRouter = router({
 
     return updatedTodo;
   }),
-
   createTodo: publicProcedure.input(z.object({ title: z.string().min(1, "Title is required") })).mutation(async ({ input }) => {
     const { title } = input;
     const newTodo = await prisma.todo.create({
@@ -78,6 +85,30 @@ export const appRouter = router({
     });
     return newTodo;
   }),
+
+  updateTodo: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        done: z.boolean().optional(),
+        favorite: z.boolean().optional(),
+        note: z.string().nullable().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { id, ...data } = input;
+      const todo = await prisma.todo.findUnique({ where: { id } });
+
+      if (!todo) throw new Error("Todo not found");
+
+      const updatedTodo = await prisma.todo.update({
+        where: { id },
+        data,
+      });
+
+      return updatedTodo;
+    }),
 });
 
 export type AppRouter = typeof appRouter;
