@@ -11,6 +11,7 @@ model Todo {
   id        Int       @id @default(autoincrement())
   title     String
   done      Boolean   @default(false)
+  favorite  Boolean   @default(false)
   createdAt DateTime  @default(now())
   deletedAt DateTime?
   note      String?

@@ -20,6 +20,35 @@ export const appRouter = router({
 
     return deletedTodo;
   }),
+  toggleBoolean: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        field: z.enum(["done", "favorite"]), // Ensure only valid fields can be passed
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { id, field } = input;
+
+      const todo = await prisma.todo.findUnique({ where: { id } });
+
+      if (!todo) {
+        throw new Error("Todo not found");
+      }
+
+      if (typeof todo[field] !== "boolean") {
+        throw new Error("Field is not a boolean");
+      }
+
+      const updatedTodo = await prisma.todo.update({
+        where: { id },
+        data: {
+          [field]: !todo[field],
+        },
+      });
+
+      return updatedTodo;
+    }),
   toggleDone: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ input }) => {
     const { id } = input;
 

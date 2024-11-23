@@ -1,11 +1,9 @@
 "use client";
-import { useState } from "react";
+import TodoList from "./_components/TodoLIst";
 import { trpc } from "./_trpc/client";
 import { create } from "zustand";
 
 type TodoStore = {
-  count: number;
-  inc: () => void;
   title: string;
   setTitle: (newTitle: string) => void;
 };
@@ -13,24 +11,10 @@ type TodoStore = {
 const useTodoStore = create<TodoStore>()((set) => ({
   title: "",
   setTitle: (newTitle) => set(() => ({ title: newTitle })),
-  count: 1,
-  inc: () => set((state) => ({ count: state.count + 1 })),
 }));
-// import {create} from 'zustand'
-
-// type TodoStore = {
-//   title: string
-//   setTitle: ()=> void
-// }
-
-// const useTitleStore = create<TodoStore>() ((set)=>{
-//   title:'',
-//   setTitle: ()=>set((newTitle)=>({title: newTitle}))
-// })
 
 export default function Home() {
-  const { count, inc, title, setTitle } = useTodoStore();
-  // const [title, setTitle] = useState("");
+  const { title, setTitle } = useTodoStore();
   const getTodos = trpc.getTodos.useQuery();
   const createTodo = trpc.createTodo.useMutation({
     onSettled: () => {
@@ -59,11 +43,7 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-4">
-      {/* <div>
-        <span>{count}</span>
-        <button onClick={inc}>one up</button>
-      </div> */}
-      <h1>Home</h1>
+      <p className="text-lg font-semibold py-5">Tasks</p>
       <div>
         <form onSubmit={handleSubmit}>
           <input
@@ -76,45 +56,7 @@ export default function Home() {
           <button className="bg-blue-500 text-white p-2 rounded">+</button>
         </form>
       </div>
-      <pre>{JSON.stringify(getTodos.isFetching)}</pre>
-      {/* Display loading or error state */}
-      {getTodos.isLoading ? (
-        <p>Loading...</p>
-      ) : getTodos.isError ? (
-        <p>Error loading todos</p>
-      ) : (
-        <>
-          <div>
-            <div className="flex flex-col gap-3 pt-5">
-              {getTodos.data.map((todo) => (
-                <div key={`9aOnfYyr-${todo.id}`} className="border flex justify-between align-middle rounded-md px-4 py-2">
-                  <div className="flex gap-3">
-                    <button
-                      className={todo.done ? "bg-green-200" : ""}
-                      onClick={() => {
-                        console.log(todo.id);
-                        toggleDone.mutate({ id: todo.id });
-                      }}
-                    >
-                      {todo.done ? "1" : "0"}
-                    </button>
-                    <div>{todo.title}</div>
-                  </div>
-                  <button
-                    onClick={() => {
-                      console.log(todo.id);
-                      deleteTodo.mutate({ id: todo.id });
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* <pre>{JSON.stringify(getTodos.data, null, 2)}</pre> */}
-        </>
-      )}
+      <TodoList />
     </div>
   );
 }
