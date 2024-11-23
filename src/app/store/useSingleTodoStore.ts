@@ -2,13 +2,12 @@ import { create } from "zustand";
 
 interface TodoState {
   todoItem: {
-    id: number | null;
+    id: number;
     title: string;
     done: boolean;
     favorite: boolean;
-    note: string; // Allowing null here
+    note: string;
     createdAt?: string;
-    deletedAt?: string | null;
   };
   showItem: boolean;
   setTodoItem: (todo: TodoState["todoItem"]) => void;
@@ -18,7 +17,7 @@ interface TodoState {
 }
 
 export const useSingleTodoStore = create<TodoState>((set) => ({
-  todoItem: { id: null, title: "", done: false, favorite: false, note: "" },
+  todoItem: { id: 0, title: "", done: false, favorite: false, note: "" },
   showItem: false,
   setTodoItem: (todo) => set({ todoItem: todo, showItem: true }),
   updateTodoField: (field, value) =>

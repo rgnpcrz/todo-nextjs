@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`h-dvh mx-5 border border-red-500  antialiased`}>
+      <body className={`h-dvh     antialiased`}>
         <Provider>{children}</Provider>
       </body>
     </html>

@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-full border mx-auto max-w-[2000px] flex border-red-400">
+    <main className="h-full border mx-auto max-w-[2000px] flex ">
       <div className=" relative  flex flex-1 flex-col  border h-full  ">
         <div className="py-4 border px-4">
           <p className="text-lg font-semibold ">Tasks</p>

@@ -14,5 +14,5 @@ model Todo {
   favorite  Boolean   @default(false)
   createdAt DateTime  @default(now())
   deletedAt DateTime?
-  note      String?
+  note      String?   @default("")
 }
