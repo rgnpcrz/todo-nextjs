@@ -93,7 +93,7 @@ export const appRouter = router({
         title: z.string().optional(),
         done: z.boolean().optional(),
         favorite: z.boolean().optional(),
-        note: z.string().nullable().optional(),
+        note: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {

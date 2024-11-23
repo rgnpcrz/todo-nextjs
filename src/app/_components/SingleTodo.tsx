@@ -64,7 +64,7 @@ export default function SingleTodo() {
           <input type="text" value={todoItem.title} onChange={(e) => handleUpdateTitle(e.target.value)} className="font-bold p-4 border-none bg-transparent  w-full" />
         </div>
         <div className=" bg-white flex justify-between rounded-md border gap-3">
-          <textarea placeholder="Add note here" value={todoItem.note} onChange={(e) => handleUpdateNote(e.target.value)} className="font-bold min-h-64 border-none bg-transparent p-4  w-full" />
+          <textarea placeholder="Add note here" value={todoItem.note} onChange={(e) => handleUpdateNote(e.target.value)} className=" min-h-64 border-none bg-transparent p-4  w-full" />
         </div>
 
         <div className="p-4 rounded-md bg-white border">
