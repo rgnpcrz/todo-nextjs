@@ -3,8 +3,18 @@
 import { IconCircle, IconCircleCheck, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { useTodos } from "../hooks/useTodos";
 
+import { useRouter, useSearchParams } from "next/navigation";
+
 export default function TodoList() {
   const { todos = [], deleteTodo, toggleBoolean, isLoading, isError } = useTodos();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleOpenTodo = (id: number) => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+    currentParams.set("todoId", id.toString()); // Set the `todoId` parameter
+    router.push(`?${currentParams.toString()}`); // Update the URL
+  };
 
   return (
     <div className=" ">
@@ -14,8 +24,8 @@ export default function TodoList() {
         <p>Error loading todos</p>
       ) : (
         <>
-          <div>
-            <div className="flex flex-col gap-3 pt-5">
+          <div className="p-4">
+            <div className="flex flex-col gap-3">
               {todos.map((todo) => (
                 <div key={`9aOnfYyr-${todo.id}`} className="border flex justify-between align-middle rounded-md p-3">
                   <div className="flex gap-3">
@@ -25,11 +35,18 @@ export default function TodoList() {
                         toggleBoolean.mutate({ id: todo.id, field: "done" });
                       }}
                     >
-                      {todo.done ? <IconCircle /> : <IconCircleCheck className="text-green-500" />}
+                      {todo.done ? <IconCircleCheck className="text-green-500" /> : <IconCircle />}
                     </button>
                     <div>{todo.title}</div>
                   </div>
                   <div className="flex gap-5">
+                    <button
+                      onClick={() => {
+                        handleOpenTodo(todo.id);
+                      }}
+                    >
+                      Details
+                    </button>
                     <button
                       onClick={() => {
                         console.log(todo.id);

@@ -28,21 +28,45 @@ export default function Home() {
   };
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4">
-      <p className="text-lg font-semibold py-5">Tasks</p>
-      <div>
+    <div className="mx-auto relative max-w-[1400px] flex flex-col  border h-full">
+      <div className="py-4 border px-4">
+        <p className="text-lg font-semibold ">Tasks</p>
+      </div>
+      <div className="flex-1 overflow-y-scroll ">
+        <TodoList />
+      </div>
+      <div className="p-4 border-t bg-white">
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)} // Update title state
-            placeholder="Enter todo title"
-            className="border border-gray-300 p-2 rounded"
-          />
-          <button className="bg-blue-500 text-white p-2 rounded">+</button>
+          <div className="relative">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)} // Update title state
+              placeholder="Enter todo title"
+              className="border border-gray-300 p-2 rounded pl-8 w-full"
+            />
+            <div className="absolute right-1 inset-y-0 flex  items-center ">
+              <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
+            </div>
+          </div>
         </form>
       </div>
-      <TodoList />
+      {/* <div className="absolute bottom-0 inset-x-0 p-4 border-t bg-white">
+        <form onSubmit={handleSubmit}>
+          <div className="relative">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)} // Update title state
+              placeholder="Enter todo title"
+              className="border border-gray-300 p-2 rounded pl-8 w-full"
+            />
+            <div className="absolute right-1 inset-y-0 flex  items-center ">
+              <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
+            </div>
+          </div>
+        </form>
+      </div> */}
     </div>
   );
 }
