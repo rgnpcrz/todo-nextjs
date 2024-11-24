@@ -70,10 +70,6 @@ export default function SingleTodo() {
           <div className=" bg-white flex justify-between rounded-md border gap-3">
             <textarea placeholder="Add note here" value={todoItem.note || ""} onChange={(e) => handleUpdateNote(e.target.value)} className=" min-h-64 border-none bg-transparent p-4  w-full" />
           </div>
-
-          {/* <div className="p-4 rounded-md bg-white border">
-            <pre>{JSON.stringify(todoItem, null, 2)}</pre>
-          </div> */}
         </div>
         <div className="flex justify-between px-4 py-6 border-t-2 mt-auto">
           <p className="font-semibold">{formatDate(todoItem.createdAt)}</p>
