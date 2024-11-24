@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface TodoState {
+type TodoState = {
   todoItem: {
     id: number;
     title: string;
@@ -14,7 +14,7 @@ interface TodoState {
   updateTodoField: (field: string, value: any) => void;
   closeItem: () => void;
   openItem: (todo: TodoState["todoItem"]) => void;
-}
+};
 
 export const useSingleTodoStore = create<TodoState>((set) => ({
   todoItem: { id: 0, title: "", done: false, favorite: false, note: "", createdAt: "" },
