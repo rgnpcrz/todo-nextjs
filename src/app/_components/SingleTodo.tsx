@@ -1,5 +1,4 @@
 "use client";
-
 import { IconCheck, IconStar, IconStarFilled, IconTrash, IconX } from "@tabler/icons-react";
 import { useSingleTodoStore } from "../store/useSingleTodoStore";
 import { useTodos } from "../hooks/useTodos";

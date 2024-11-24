@@ -1,5 +1,4 @@
 "use client";
-
 import { IconCircle, IconCircleCheck, IconLoader2, IconNote, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { useTodos } from "../hooks/useTodos";
 import { useSingleTodoStore } from "../store/useSingleTodoStore";
@@ -63,7 +62,6 @@ export default function AllTodoList() {
                 </div>
               ))}
             </div>
-            {/* <pre>{JSON.stringify(todos, null, 2)}</pre> */}
           </div>
         </>
       )}
