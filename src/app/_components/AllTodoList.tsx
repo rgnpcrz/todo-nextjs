@@ -5,7 +5,7 @@ import { useTodos } from "../hooks/useTodos";
 import { useSingleTodoStore } from "../store/useSingleTodoStore";
 import { TodoItem } from "@/types";
 
-export default function TodoList() {
+export default function AllTodoList() {
   const { todos = [], toggleBoolean, isLoading, isError } = useTodos();
   const { setTodoItem, todoItem } = useSingleTodoStore();
 

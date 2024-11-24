@@ -1,5 +1,5 @@
 "use client";
-import TodoList from "./_components/TodoList";
+import AllTodoList from "./_components/AllTodoList";
 import { create } from "zustand";
 import { useTodos } from "./hooks/useTodos";
 import SingleTodo from "./_components/SingleTodo";
@@ -37,7 +37,7 @@ export default function Home() {
           <p className="text-lg font-semibold ">Tasks</p>
         </div>
         <div className="flex-1  overflow-y-scroll bg-slate-50 ">
-          <TodoList />
+          <AllTodoList />
         </div>
         <div className="p-4 border-t bg-white">
           <form onSubmit={handleSubmit}>
