@@ -112,13 +112,3 @@ export const appRouter = router({
 });
 
 export type AppRouter = typeof appRouter;
-
-// import { publicProcedure, router } from "./trpc";
-
-// export const appRouter = router({
-//   todoList: publicProcedure.query(async () => {
-//     return [10, 20, 30, 40, 50];
-//   }),
-// });
-
-// export type AppRouter = typeof appRouter;

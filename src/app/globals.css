@@ -8,17 +8,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  /* @apply bg-transparent; */
   background-color: #ffffff00;
 }
 
 ::-webkit-scrollbar-thumb {
-  /* @apply rounded-rounded bg-grey-30; */
   background-color: #d1d5db;
   border-radius: 50px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  /* @apply bg-grey-40; */
   background-color: #9ca3af;
 }
