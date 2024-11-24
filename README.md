@@ -94,6 +94,12 @@ If you face any issues during setup, here are some common solutions:
 
 ---
 
+## Deployed Environment
+
+You can also check the project on the deployed environment here: [https://ve2max.rgnpcrz.com](https://ve2max.rgnpcrz.com)
+
+---
+
 # NextJS 14 Test Project
 
 ## Overview
