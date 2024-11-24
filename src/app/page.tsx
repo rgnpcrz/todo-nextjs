@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { useTodos } from "./hooks/useTodos";
 import SingleTodo from "./_components/SingleTodo";
 import { useSingleTodoStore } from "./store/useSingleTodoStore";
+import { IconClipboardList, IconPlus } from "@tabler/icons-react";
 
 type TodoStore = {
   title: string;
@@ -31,11 +32,11 @@ export default function Home() {
 
   return (
     <main className="h-full border mx-auto max-w-[2000px] flex ">
-      <div className=" relative  flex flex-1 flex-col  border h-full  ">
-        <div className="py-4 border px-4">
+      <div className=" relative  flex flex-1 flex-col  h-full  ">
+        <div className="p-4 border-b ">
           <p className="text-lg font-semibold ">Tasks</p>
         </div>
-        <div className="flex-1 overflow-y-scroll bg-slate-50 ">
+        <div className="flex-1  overflow-y-scroll bg-slate-50 ">
           <TodoList />
         </div>
         <div className="p-4 border-t bg-white">
@@ -45,11 +46,14 @@ export default function Home() {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)} // Update title state
-                placeholder="Enter todo title"
-                className="border border-gray-300 p-2 rounded pl-8 w-full"
+                placeholder="Add a todo"
+                className="border border-gray-300 py-2  rounded pl-10 w-full"
               />
               <div className="absolute right-1 inset-y-0 flex  items-center ">
-                <button className="bg-blue-500 text-white py-1 px-3 rounded ">Enter</button>
+                <button className="bg-slate-500 text-white py-1 px-3 rounded ">Enter</button>
+              </div>
+              <div className="absolute left-2 inset-y-0 flex  items-center ">
+                <IconPlus />
               </div>
             </div>
           </form>

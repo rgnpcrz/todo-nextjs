@@ -7,7 +7,7 @@ interface TodoState {
     done: boolean;
     favorite: boolean;
     note: string;
-    createdAt?: string;
+    createdAt: string;
   };
   showItem: boolean;
   setTodoItem: (todo: TodoState["todoItem"]) => void;
@@ -17,14 +17,14 @@ interface TodoState {
 }
 
 export const useSingleTodoStore = create<TodoState>((set) => ({
-  todoItem: { id: 0, title: "", done: false, favorite: false, note: "" },
+  todoItem: { id: 0, title: "", done: false, favorite: false, note: "", createdAt: "" },
   showItem: false,
   setTodoItem: (todo) => set({ todoItem: todo, showItem: true }),
   updateTodoField: (field, value) =>
     set((state) => ({
       todoItem: { ...state.todoItem, [field]: value },
     })),
-  closeItem: () => set({ showItem: false }),
+  closeItem: () => set({ showItem: false, todoItem: { id: 0, title: "", done: false, favorite: false, note: "", createdAt: "" } }),
   openItem: (todo) => set({ showItem: true, todoItem: todo }),
 }));
 
