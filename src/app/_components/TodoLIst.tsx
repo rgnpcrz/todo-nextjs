@@ -36,7 +36,7 @@ export default function TodoList() {
                     </div>
                   </div>
                   <div className="flex gap-5">
-                    {todo.note?.length > 0 ? (
+                    {todo.note !== "" ? (
                       <div>
                         <IconNote className="text-gray-400" />
                       </div>
