@@ -15,8 +15,8 @@ To get started, you will need the following installed on your device:
    Clone this project to your local machine by running:
 
    ```bash
-   git clone <repository-url>
-   cd <project-folder>
+   git clone https://github.com/rgnpcrz/todo-nextjs.git
+   cd nextjs-assessment-rgnpcrz
    ```
 
 2. **Install Dependencies**:
