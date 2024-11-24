@@ -3,6 +3,6 @@ export type TodoItem = {
   title: string;
   done: boolean;
   favorite: boolean;
-  note: string;
+  note: string | null;
   createdAt: string;
 };
