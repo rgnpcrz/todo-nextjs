@@ -1,14 +1,8 @@
+import { TodoItem } from "@/types";
 import { create } from "zustand";
 
 type TodoState = {
-  todoItem: {
-    id: number;
-    title: string;
-    done: boolean;
-    favorite: boolean;
-    note: string;
-    createdAt: string;
-  };
+  todoItem: TodoItem;
   showItem: boolean;
   setTodoItem: (todo: TodoState["todoItem"]) => void;
   updateTodoField: (field: string, value: any) => void;

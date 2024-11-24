@@ -3,6 +3,7 @@
 import { IconCircle, IconCircleCheck, IconLoader2, IconNote, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { useTodos } from "../hooks/useTodos";
 import { useSingleTodoStore } from "../store/useSingleTodoStore";
+import { TodoItem } from "@/types";
 
 export default function TodoList() {
   const { todos = [], toggleBoolean, isLoading, isError } = useTodos();
@@ -20,7 +21,7 @@ export default function TodoList() {
         <>
           <div className="p-4 ">
             <div className="flex flex-col gap-2">
-              {todos.map((todo) => (
+              {todos.map((todo: TodoItem) => (
                 <div key={`9aOnfYyr-${todo.id}`} className="border relative bg-white flex justify-between align-middle rounded-md p-3">
                   <div className="flex gap-2">
                     <button
@@ -42,11 +43,12 @@ export default function TodoList() {
                       </div>
                     ) : null}
                     <button
+                      className="border  px-2 rounded-md"
                       onClick={() => {
                         setTodoItem(todo);
                       }}
                     >
-                      Details
+                      View todo
                     </button>
 
                     <button
