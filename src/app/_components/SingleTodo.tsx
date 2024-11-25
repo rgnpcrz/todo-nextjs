@@ -3,6 +3,7 @@ import { IconCheck, IconStar, IconStarFilled, IconTrash, IconX } from "@tabler/i
 import { useSingleTodoStore } from "../store/useSingleTodoStore";
 import { useTodos } from "../hooks/useTodos";
 import { formatDate } from "../utils/formatDate";
+import { useRef } from "react";
 
 export default function SingleTodo() {
   const { todoItem, showItem, closeItem, updateTodoField } = useSingleTodoStore();
@@ -26,20 +27,66 @@ export default function SingleTodo() {
     });
   };
 
+  //
+  // This here acts as a debouncer for note and title updates
+  const useDebouncedCallback = (callback: (...args: any[]) => void, delay: number) => {
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const debouncedCallback = (...args: any[]) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    };
+
+    return debouncedCallback;
+  };
   const handleUpdateTitle = (title: string) => {
-    updateTodoField("title", title);
+    updateTodoField("title", title); // Immediate update
+
+    // Debounced server request
+    debouncedUpdateTitle(title);
+  };
+
+  const handleUpdateNote = (note: string) => {
+    updateTodoField("note", note); // Immediate update
+
+    // Debounced server request
+    debouncedUpdateNote(note);
+  };
+
+  const debouncedUpdateTitle = useDebouncedCallback((title: string) => {
     updateTodo.mutate({
       id: todoItem.id,
       title,
     });
-  };
-  const handleUpdateNote = (note: string) => {
-    updateTodoField("note", note);
+  }, 1000);
+
+  const debouncedUpdateNote = useDebouncedCallback((note: string) => {
     updateTodo.mutate({
       id: todoItem.id,
       note,
     });
-  };
+  }, 1000);
+  //
+
+  // const handleUpdateTitle = (title: string) => {
+  //   updateTodoField("title", title);
+  //   updateTodo.mutate({
+  //     id: todoItem.id,
+  //     title,
+  //   });
+  // };
+  // const handleUpdateNote = (note: string) => {
+  //   updateTodoField("note", note);
+  //   updateTodo.mutate({
+  //     id: todoItem.id,
+  //     note,
+  //   });
+  // };
 
   const handleDelete = () => {
     deleteTodo.mutate({ id: todoItem.id });
